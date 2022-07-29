@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Images/Effects/light.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Effects/Parade.gd" type="Script" id=2]
+[ext_resource path="res://Images/Effects/shockwave.png" type="Texture" id=3]
+[ext_resource path="res://Sons/Entities/parry.wav" type="AudioStream" id=4]
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.666667 )
+colors = PoolColorArray( 1, 0.498039, 0, 1, 1, 1, 1, 1 )
+
+[sub_resource type="StreamTexture" id=3]
+flags = 4
+load_path = "res://.import/light.png-2f500d5292fe8d74db28eee85310f045.stex"
+
+[sub_resource type="StreamTexture" id=10]
+flags = 4
+load_path = "res://.import/light.png-2f500d5292fe8d74db28eee85310f045.stex"
+
+[sub_resource type="StreamTexture" id=11]
+flags = 4
+load_path = "res://.import/light.png-2f500d5292fe8d74db28eee85310f045.stex"
+
+[sub_resource type="Curve" id=12]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.492806, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0.521569, 1 )
+colors = PoolColorArray( 1, 0.498039, 0, 1, 1, 1, 1, 1, 1, 0.498039, 0, 1 )
+
+[node name="Parade" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TopLeft" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.5
+explosiveness = 0.58
+texture = ExtResource( 1 )
+direction = Vector2( -1, -0.3 )
+spread = 20.0
+gravity = Vector2( 0, -100 )
+initial_velocity = 67.11
+scale_amount = 0.05
+scale_amount_curve = SubResource( 8 )
+color_ramp = SubResource( 9 )
+
+[node name="BottomLeft" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.5
+explosiveness = 0.58
+texture = SubResource( 3 )
+direction = Vector2( -1, 0.3 )
+spread = 20.0
+gravity = Vector2( 0, 100 )
+initial_velocity = 67.11
+scale_amount = 0.05
+scale_amount_curve = SubResource( 8 )
+
+[node name="BottomRight" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.5
+explosiveness = 0.58
+texture = SubResource( 10 )
+direction = Vector2( 1, 0.3 )
+spread = 20.0
+gravity = Vector2( 0, 100 )
+initial_velocity = 67.11
+scale_amount = 0.05
+scale_amount_curve = SubResource( 8 )
+
+[node name="TopRight" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.5
+explosiveness = 0.58
+texture = SubResource( 11 )
+direction = Vector2( 1, -0.3 )
+spread = 20.0
+gravity = Vector2( 0, -100 )
+initial_velocity = 67.11
+scale_amount = 0.05
+scale_amount_curve = SubResource( 8 )
+color_ramp = SubResource( 9 )
+
+[node name="Explosion" type="CPUParticles2D" parent="."]
+amount = 1
+lifetime = 0.3
+texture = ExtResource( 3 )
+gravity = Vector2( 0, 0 )
+scale_amount = 0.07
+scale_amount_curve = SubResource( 12 )
+color_ramp = SubResource( 7 )
+
+[node name="ParadeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true

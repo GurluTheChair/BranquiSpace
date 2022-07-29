@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Images/Shaders/shockwave.shader" type="Shader" id=1]
+[ext_resource path="res://Scripts/Effects/Shockwave.gd" type="Script" id=2]
+[ext_resource path="res://Images/Effects/light.png" type="Texture" id=3]
+[ext_resource path="res://Images/Effects/shockwave.png" type="Texture" id=5]
+[ext_resource path="res://Images/Animations/Shockwave.tres" type="Animation" id=6]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/force = 0.0
+shader_param/size = 0.0
+shader_param/thickness = 0.2
+shader_param/offset = 0.0
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.665468, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.172549, 0.411765, 0.670588 )
+colors = PoolColorArray( 0, 0.227451, 1, 1, 0, 0.898039, 1, 1, 0, 0.227451, 1, 1, 0, 0.898039, 1, 1 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.928057, 0.503644 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.603922 )
+colors = PoolColorArray( 0, 0.296875, 1, 1, 0, 0.898039, 1, 1 )
+
+[node name="Shockwave" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -550.0
+margin_top = -650.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+pause_mode = 2
+autoplay = "Shockwave"
+anims/Shockwave = ExtResource( 6 )
+
+[node name="Boom" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+texture = ExtResource( 5 )
+gravity = Vector2( 0, 0 )
+scale_amount = 5.0
+scale_amount_curve = SubResource( 7 )
+color_ramp = SubResource( 8 )
+
+[node name="Trail" type="CPUParticles2D" parent="Boom"]
+emitting = false
+amount = 100
+explosiveness = 0.8
+texture = ExtResource( 3 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 1000.0
+scale_amount = 0.05
+scale_amount_curve = SubResource( 4 )
+color = Color( 0, 0.984314, 1, 1 )
+hue_variation = 0.01
+hue_variation_random = 1.0
+
+[node name="DoomSound" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+
+[node name="Charge" type="CPUParticles2D" parent="."]
+amount = 50
+explosiveness = 0.41
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 46.53
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+orbit_velocity = 0.03
+radial_accel = -100.0
+scale_amount = 0.05
+scale_amount_curve = SubResource( 9 )
+color_ramp = SubResource( 10 )
+
+[node name="Tween" type="Tween" parent="."]

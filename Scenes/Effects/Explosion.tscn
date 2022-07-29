@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Effects/Explosion.gd" type="Script" id=1]
+[ext_resource path="res://Sons/Entities/impact.wav" type="AudioStream" id=2]
+[ext_resource path="res://Images/Effects/light.png" type="Texture" id=3]
+
+[sub_resource type="StreamTexture" id=4]
+flags = 4
+load_path = "res://.import/light.png-2f500d5292fe8d74db28eee85310f045.stex"
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.76259, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.513726 )
+colors = PoolColorArray( 1, 0.435294, 0.435294, 1, 1, 1, 1, 1 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0.0369128, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.0981, 0.0, 0, 0 ]
+
+[node name="Explosion" type="Node2D"]
+show_behind_parent = true
+z_index = -1
+script = ExtResource( 1 )
+
+[node name="Effect" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 20 )
+scale = Vector2( 0.02, 0.02 )
+emitting = false
+amount = 50
+preprocess = 10.0
+explosiveness = 0.95
+randomness = 1.0
+texture = SubResource( 4 )
+emission_shape = 2
+emission_rect_extents = Vector2( 22.5, 22.5 )
+direction = Vector2( 0, -1 )
+spread = 120.0
+gravity = Vector2( 0, -10000 )
+initial_velocity = 7000.0
+initial_velocity_random = 1.0
+linear_accel = 5.0
+linear_accel_random = 1.0
+scale_amount_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+autoplay = true
+
+[node name="Bullet" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 20 )
+amount = 30
+lifetime = 0.25
+explosiveness = 0.9
+texture = ExtResource( 3 )
+direction = Vector2( 0, -1 )
+spread = 180.0
+gravity = Vector2( 0, -400 )
+initial_velocity = 100.0
+scale_amount = 0.01
+scale_amount_curve = SubResource( 6 )

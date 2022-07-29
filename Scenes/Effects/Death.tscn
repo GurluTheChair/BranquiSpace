@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Images/Shaders/shockwave.shader" type="Shader" id=1]
+[ext_resource path="res://Scripts/Effects/Death.gd" type="Script" id=2]
+[ext_resource path="res://Images/Animations/Death_Player_Explosion.tres" type="Animation" id=3]
+[ext_resource path="res://Sons/Entities/Player/implosion.wav" type="AudioStream" id=4]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/force = 0.0
+shader_param/size = 0.175
+shader_param/thickness = 0.2
+shader_param/offset = 0.0
+
+[sub_resource type="StreamTexture" id=2]
+flags = 4
+load_path = "res://.import/light.png-2f500d5292fe8d74db28eee85310f045.stex"
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.322544 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Death" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -550.0
+margin_top = -650.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+pause_mode = 2
+autoplay = "Death_Player_Explosion"
+anims/Death_Player_Explosion = ExtResource( 3 )
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+explosiveness = 0.8
+texture = SubResource( 2 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 1000.0
+scale_amount = 0.05
+scale_amount_curve = SubResource( 3 )
+hue_variation = 0.01
+hue_variation_random = 1.0
+
+[node name="DoomSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+autoplay = true

@@ -1,0 +1,209 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Scenes/Effects/Stars.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Entities/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Effects/Camera_Shake.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Terrain.gd" type="Script" id=4]
+[ext_resource path="res://Images/Entities/pewpew.jpg" type="Texture" id=5]
+[ext_resource path="res://Images/Effects/light.png" type="Texture" id=6]
+[ext_resource path="res://Images/UI/square.png" type="Texture" id=7]
+[ext_resource path="res://Sons/UI/restart.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sons/UI/Enter the Gop.wav" type="AudioStream" id=9]
+
+[sub_resource type="SegmentShape2D" id=1]
+b = Vector2( 750, 0 )
+
+[sub_resource type="SegmentShape2D" id=2]
+b = Vector2( 0, 1050 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends CPUParticles2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+"
+
+[sub_resource type="SegmentShape2D" id=4]
+b = Vector2( 550, 0 )
+
+[sub_resource type="SegmentShape2D" id=5]
+b = Vector2( 0, 350 )
+
+[node name="Level 1" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 3 )
+
+[node name="Despawn Walls" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 108
+
+[node name="Up" type="CollisionShape2D" parent="Despawn Walls"]
+position = Vector2( -100, -300 )
+shape = SubResource( 1 )
+
+[node name="Down" type="CollisionShape2D" parent="Despawn Walls"]
+position = Vector2( -100, 750 )
+shape = SubResource( 1 )
+
+[node name="Left" type="CollisionShape2D" parent="Despawn Walls"]
+position = Vector2( -100, -300 )
+shape = SubResource( 2 )
+
+[node name="Right" type="CollisionShape2D" parent="Despawn Walls"]
+position = Vector2( 650, -300 )
+shape = SubResource( 2 )
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+modulate = Color( 0.262745, 0.27451, 1, 0.0156863 )
+show_behind_parent = true
+light_mask = 16
+position = Vector2( 275, 325 )
+scale = Vector2( 0.575, 0.6745 )
+z_index = -4
+emitting = false
+amount = 200
+lifetime_randomness = 1.0
+texture = ExtResource( 6 )
+emission_shape = 2
+emission_rect_extents = Vector2( 650, 550 )
+scale_amount_random = 0.5
+script = SubResource( 3 )
+
+[node name="Background" type="Sprite" parent="."]
+modulate = Color( 0.0745098, 0.0745098, 0.0823529, 1 )
+position = Vector2( 280, 333 )
+scale = Vector2( 1.71286, 1.90903 )
+z_index = -5
+texture = ExtResource( 5 )
+
+[node name="Stars" parent="." instance=ExtResource( 1 )]
+position = Vector2( 275, -100 )
+
+[node name="UI" type="Control" parent="."]
+self_modulate = Color( 0.582968, 0.970562, 1, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBar" type="VBoxContainer" parent="UI"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 340.0
+margin_bottom = 2916.0
+rect_scale = Vector2( 0.03, 0.1 )
+custom_constants/separation = 30
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="TextureRect" parent="UI/LifeBar"]
+margin_right = 338.0
+margin_bottom = 338.0
+texture = ExtResource( 7 )
+
+[node name="2" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 368.0
+margin_right = 338.0
+margin_bottom = 706.0
+texture = ExtResource( 7 )
+
+[node name="3" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 736.0
+margin_right = 338.0
+margin_bottom = 1074.0
+texture = ExtResource( 7 )
+
+[node name="4" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 1104.0
+margin_right = 338.0
+margin_bottom = 1442.0
+texture = ExtResource( 7 )
+
+[node name="5" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 1472.0
+margin_right = 338.0
+margin_bottom = 1810.0
+texture = ExtResource( 7 )
+
+[node name="6" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 1840.0
+margin_right = 338.0
+margin_bottom = 2178.0
+texture = ExtResource( 7 )
+
+[node name="7" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 2208.0
+margin_right = 338.0
+margin_bottom = 2546.0
+texture = ExtResource( 7 )
+
+[node name="8" type="TextureRect" parent="UI/LifeBar"]
+margin_top = 2576.0
+margin_right = 338.0
+margin_bottom = 2914.0
+texture = ExtResource( 7 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="Up" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 0, 150 )
+shape = SubResource( 4 )
+
+[node name="Down" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 0, 500 )
+shape = SubResource( 4 )
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 0, 150 )
+shape = SubResource( 5 )
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 550, 150 )
+shape = SubResource( 5 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 275, 400 )
+
+[node name="SFX_Handler" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 275, 325 )
+stream = ExtResource( 8 )
+volume_db = -5.0
+autoplay = true
+
+[node name="EnemySpawn" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="GopSpawn" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Spawned" type="Node2D" parent="."]
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 275, 325 )
+stream = ExtResource( 9 )
+volume_db = -13.0
+autoplay = true
+
+[connection signal="body_entered" from="Despawn Walls" to="." method="_on_Despawn_Walls_body_entered"]
+[connection signal="timeout" from="EnemySpawn" to="." method="_on_EnemySpawn_timeout"]
+[connection signal="timeout" from="GopSpawn" to="." method="_on_GopSpawn_timeout"]
